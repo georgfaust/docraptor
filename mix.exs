@@ -20,7 +20,7 @@ defmodule Docraptor.MixProject do
   defp deps do
     [
       {:jason, "~> 1.4.0"},
-      {:httpoison, "~> 1.8"},
+      {:httpoison, "~> 2.1"},
     ]
   end
 end
