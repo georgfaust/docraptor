@@ -16,19 +16,22 @@ defmodule Docraptor do
   end
 
   def render(payload) do
-    case HTTPoison.post(@api_endpoint, payload, @headers) do
+    case HTTPoison.post(@api_endpoint, payload, @headers, recv_timeout: 60_000) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} -> {:ok, body}
       {:ok, error_response} -> {:error, error_response}
     end
   end
 
-  defp get_payload(content, type, test, name, pipeline \\ @pipeline) do
+  defp get_payload(content, type, test, name, pipeline \\ @pipeline, js \\ true) do
     Jason.encode!(%{
       test: test,
       document_content: content,
       type: type,
       name: name,
-      pipeline: pipeline
+      pipeline: pipeline,
+      prince_options: %{
+        javascript: js
+      }
     })
   end
 end
